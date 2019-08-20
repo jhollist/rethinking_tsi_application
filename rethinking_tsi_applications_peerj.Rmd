@@ -25,7 +25,6 @@ header-includes: >
   \usepackage{lipsum}
   \usepackage{multirow}
 bibliography: ReferencesSup.bib
-lineno: true
 output:
   bookdown::pdf_book:
     base_format: rticles::peerj_article # for using bookdown features like \@ref()
