@@ -8,7 +8,7 @@
 %% version 1.1 or newer of the wlpeerj.cls file, and
 %% the corresponding author info requires v1.2
 
-\documentclass[fleqn,10pt]{wlpeerj} % for preprint submissions
+\documentclass[fleqn,10pt,lineno]{wlpeerj} % for journal submissions
 
 % ZNK -- Adding headers for pandoc
 
@@ -50,7 +50,7 @@
 % 
 
 \begin{abstract}
-The abstract of the article. It can also be on \emph{multiple} lines.
+Lake trophic state indices have long been used to provide a measure of the trophic state of lakes. Over time it has been determined that these indices perform better when they utilize mutliple metrics and provide a continuous measurement of trophic state. We utilize such a method for trophic state that is based upon a Proportional Odds Logistic Regression (POLR) model and extend this model with a Bayesian multilevel model that predicts nutrient concentrations from universally available GIS data. This Bayesian multilevel model provides relatively accurate measures of trophic state and has an overall accuraccy of 60\%. The approach illustrates a method for estimating a continuous, mutli-metric trophic state index for any lake in the United States. Future improvements to the model will focus on improving overall accuracy and use variables that are more sensitive to change over time.
 % Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text.
 \end{abstract}
 
@@ -64,10 +64,11 @@ The abstract of the article. It can also be on \emph{multiple} lines.
 \section*{Introduction}\label{introduction}}
 \addcontentsline{toc}{section}{Introduction}
 
-The drawback of the developed POLR model is the cost of monitoring multiple predictor variables (e.g., nutrients). This is addressed in the extended application by linking nitrogen and phosphorus to universally available GIS variables. The goal of the extended POLR model is to allow prediction of the trophic state of all lakes (i.e.~lakes with limited field data).
+In this brief research note, we extend a model for estimating a continuous mulit-metric trophic state index described by Nojavan et al.~(n.d.). This model uses lake elevation and \emph{in situ} measurements of total nitrogen, total phosphorus, and secchi depth to provide a continuous index of trophic state. The drawback of the developed POLR model is the cost of monitoring multiple predictor variables (e.g., nutrients). This is addressed in the extended application by linking nitrogen and phosphorus to universally available GIS variables. The goal of the extended POLR model is to allow prediction of the trophic state of all lakes (i.e.~lakes with limited field data) in the United States.
 
 \hypertarget{methods}{%
-\section{Methods}\label{methods}}
+\section*{Methods}\label{methods}}
+\addcontentsline{toc}{section}{Methods}
 
 We present the extended application of the developed POLR model using a Bayesian multilevel model. Our modeling work flow is as follows:
 
@@ -77,19 +78,20 @@ We present the extended application of the developed POLR model using a Bayesian
 \item
   Develop a random forest model, using R's \texttt{randomForest} package, with 5000 trees using only GIS variables to identify the best predictor variables for nitrogen and phosphorus.
 \item
-  Develop the extended application model (the Bayesian multilevel model) using R's rjags package to run Just Another Gibbs Sampler (JAGS) from inside of R. JAGS is a program for simulation and analysis of Bayesian hierarchical models using Markov Chain Monte Carlo (MCMC).
+  Develop the extended application model (the Bayesian multilevel model) using R's \texttt{rjags} package to run Just Another Gibbs Sampler (JAGS) from inside of R. JAGS is a program for simulation and analysis of Bayesian hierarchical models using Markov Chain Monte Carlo (MCMC).
 \item
   Assess the performance of the extended application model using a hold-out validation method (90\% training set, 10\% evaluation set).
 \end{enumerate}
 
-We link nitrogen and phosphorus in the POLR model to a separate nutrient model built from universally available GIS data, thereby, avoiding the need for nitrogen and phosphorus data, costly variables to measure for all lakes. The number of variables for each response variable, nitrogen or phosphorus, was decided using random forest model's variable selection plots (Figures\textasciitilde{}\ref{fig:gis_vs_NTL} \&\textasciitilde{}\ref{fig:gis_vs_PTL}).
+We link nitrogen and phosphorus in the POLR model to a separate nutrient model built from universally available GIS data, thereby, avoiding the need for nitrogen and phosphorus data, costly variables to measure for all lakes. The number of variables for each response variable, nitrogen or phosphorus, was decided using random forest model's variable selection plots(Hollister, Milstead, and Kreakie 2016).
 
 \hypertarget{results-and-discussion}{%
-\section{Results and Discussion}\label{results-and-discussion}}
+\section*{Results and Discussion}\label{results-and-discussion}}
+\addcontentsline{toc}{section}{Results and Discussion}
 
-The figures show model mean squared error as a function of the number of variables. The best representation of nitrogen and phosphorus could be achieved using three variables, adding more than three variables had incremental (\(<0.1\)) impact on root mean square error. The three most important variables were ecoregion, \% evergreen forest, and latitude. The random forest models provided estimates of variable importance for nitrogen and phosphorus and the results are reported in figures\textasciitilde{}\ref{fig:importancePlot_gis_NTL} \&\ref{fig:importancePlot_gis_PTL}.
+Selected GIS variables for nitrogen and phosphporus were initially screened with variable selection plots (Figures\textasciitilde{}\ref{fig:gis_vs_NTL} \&\textasciitilde{}\ref{fig:gis_vs_PTL}).The figures show model mean squared error as a function of the number of variables. The best representation of nitrogen and phosphorus could be achieved using three variables, adding more than three variables had incremental (\(<0.1\)) impact on root mean square error. The three most important variables were ecoregion, \% evergreen forest, and latitude. The random forest models provided estimates of variable importance for nitrogen and phosphorus and the results are reported in figures\textasciitilde{}\ref{fig:importancePlot_gis_NTL} \&\ref{fig:importancePlot_gis_PTL}.
 
-Figure\textasciitilde{}\ref{fig:DAG2} represents the regression models. The extended POLR model is grouped into two blocks (gray shaded rectangles). The trophic state classification regression, the POLR model in the lower block, includes nitrogen, phosphorus, secchi disk, and elevation as predictors. The nutrient model, in the upper block, estimates the means of nitrogen and phosphorus based on ecoregion, \% evergreen forest, and latitude. The two blocks are connected \% the estimated means of nitrogen (\(\mu_{Nitrogen}\)) and phosphorus (\(\mu_{Phosphorus}\)) to form the combined model which enables trophic state classification for all lakes without the costly sampling requirement. The relationship between nitrogen, phosphorus, and their predictors was examined using multilevel linear regression models. The standard deviation of the normal distribution, as well as each parameter in the regression model, were then assigned non-informative prior distributions (uniform, or nearly so, to allow the information from the likelihood to be interpreted probabilistically).
+Figure\textasciitilde{}\ref{fig:DAG2} represents the regression models. The extended POLR model is grouped into two blocks (gray shaded rectangles). The trophic state classification regression, the POLR model in the lower block, includes nitrogen, phosphorus, secchi disk, and elevation as predictors. The nutrient model, in the upper block, estimates the means of nitrogen and phosphorus based on ecoregion, \% evergreen forest, and latitude. The two blocks are connected through the estimated means of nitrogen (\(\mu_{Nitrogen}\)) and phosphorus (\(\mu_{Phosphorus}\)) to form the combined model which enables trophic state classification for all lakes without the costly sampling requirement. The relationship between nitrogen, phosphorus, and their predictors was examined using multilevel linear regression models. The standard deviation of the normal distribution, as well as each parameter in the regression model, were then assigned non-informative prior distributions (uniform, or nearly so, to allow the information from the likelihood to be interpreted probabilistically).
 
 The three selected variables, latitude, eco-region, and \% evergreen forest, appear to be capturing patterns of total nutrient concentration at three different spatial scales.
 Figures\textasciitilde{}\ref{fig:PD_gisvs_N_Latitude} \&\textasciitilde{}\ref{fig:PD_gisvs_P_Latitude} depict the partial dependency plot for latitude, the marginal effect of latitude on the predicted outcome of nitrogen or phosphorus in the random forest model. For example for predicted total nitrogen, high concentrations in the northern and southern extremes of the continental US and the lowest predicted concentrations correspond to the mid-latitudes. The ecoregion variable represents an intermediate scale among these three variables and represents the variation between the regions. Finally, the \% evergreen variable was summarized within a 3 kilometer buffer around each lake and is presumably summarizing more local land use decisions that are adjacent to lakes.
@@ -112,9 +114,10 @@ The overall accuracy of the extended POLR model was 0.6 and the balanced accurac
 
 The extended POLR model calculates lake trophic index and classes differently for different eco-regions. Please refer to Table\textasciitilde{}\ref{tab:MultiPOLRCoeff} for varying coefficients in different eco-regions. For example, eco-regions 3, 6, and 5, corresponding to Northern Plains, Temperate Plains, and Southern Plains, have the highest positive coefficients for nitrogen. Hence, nitrogen plays a significant role in moving the trophic state index and class toward the eutrophic/hypereutrophic side of the trophic continuum. Further Table\textasciitilde{}\ref{tab:MultiPOLRCoeff} shows the coefficients for latitude and \% evergreen. We included these predictors as they were selected as important variables by the random forest model. They may not help predictions dramatically but they do not hurt the results.
 
-\bibliography{ReferencesSup}
+\hypertarget{tables}{%
+\section*{Tables}\label{tables}}
+\addcontentsline{toc}{section}{Tables}
 
-\pagebreak
 \begin{table}[ht]
 \caption {Coefficients for the extended POLR model.}
 \label{tab:MultiPOLRCoeff}
@@ -173,6 +176,10 @@ The extended POLR model calculates lake trophic index and classes differently fo
 \end{tabular}
 \end{table}
 
+\hypertarget{figures}{%
+\section*{Figures}\label{figures}}
+\addcontentsline{toc}{section}{Figures}
+
 \begin{figure}
   \includegraphics[scale=0.5]{gis_vs_NTL.pdf}
   \caption{Random Forest model's output for nitrogen with GIS only variables as predictors. Shows model mean squared error as a function of the number of variables.}
@@ -214,6 +221,19 @@ The extended POLR model calculates lake trophic index and classes differently fo
   \caption{Partial dependency plot for predicted total phosphorus over the range latitude: the effect of latitude on predicted total phosphorus when the rest of the predictors are held constant.}
   \label{fig:PD_gisvs_P_Latitude}
 \end{figure}
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\bibliography{ReferencesSup}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-hollister2016modeling}{}%
+Hollister, Jeffrey W, W Bryan Milstead, and Betty J Kreakie. 2016. ``Modeling Lake Trophic State: A Random Forest Approach.'' \emph{Ecosphere} 7 (3).
+
+\leavevmode\hypertarget{ref-nojavantsi}{}%
+Nojavan A., Farnaz, Betty J. Kreakie, Hollister Jeffrey W., and Song Qian. n.d. ``Rethinking the Lake Trophic State Index.'' \emph{PeerJ}.
 
 
 
