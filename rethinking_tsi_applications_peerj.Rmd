@@ -36,7 +36,7 @@ output:
 
 The drawback of the developed POLR model is the cost of monitoring multiple predictor variables (e.g., nutrients). This is addressed in the extended application by linking nitrogen and phosphorus to universally available GIS variables. The goal of the extended POLR model is to allow prediction of the trophic state of all lakes (i.e. lakes with limited field data).
 
-# Methods
+# Methods {-}
 
 We present the extended application of the developed POLR model using a Bayesian multilevel model. Our modeling work flow is as follows:
 
@@ -48,7 +48,7 @@ We present the extended application of the developed POLR model using a Bayesian
 
 We link nitrogen and phosphorus in the POLR model to a separate nutrient model built from universally available GIS data, thereby, avoiding the need for nitrogen and phosphorus data, costly variables to measure for all lakes. The number of variables for each response variable, nitrogen or phosphorus, was decided using random forest model's variable selection plots (Figures~\ref{fig:gis_vs_NTL} \&~\ref{fig:gis_vs_PTL}). 
 
-# Results and Discussion
+# Results and Discussion {-}
 
 The figures show model mean squared error as a function of the number of variables. The best representation of nitrogen and phosphorus could be achieved using three variables, adding more than three variables had incremental ($<0.1$) impact on root mean square error. The three most important variables were ecoregion, \% evergreen forest, and latitude. The random forest models provided estimates of variable importance for nitrogen and phosphorus and the results are reported in figures~\ref{fig:importancePlot_gis_NTL} \&\ref{fig:importancePlot_gis_PTL}.
 
